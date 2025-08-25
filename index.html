@@ -6,7 +6,7 @@
     <title>Motorcycle Headunit</title>
     <link rel="stylesheet" href="style.css">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 </head>
 <body>
     <div id="splash-screen">
@@ -20,6 +20,8 @@
         <main id="main-display">
             <div id="speedometer">
                 <span id="speed-value">0</span><span class="unit"> km/h</span>
+                <img id="abs-indicator" src="abs.png" alt="ABS" class="indicator-icon abs-left">
+                <img id="trs-indicator" src="trs.png" alt="TRS" class="indicator-icon trs-right">
             </div>
             <div id="parallelogram-wattmeter-container">
                 <div id="wattmeter-fill-bar"></div>
@@ -31,19 +33,17 @@
         </main>
         <footer id="bottom-bar">
             <div id="mode-selector">
-                <button id="mode-sport" class="mode-button">SPORT</button>
-                <button id="mode-comfort" class="mode-button active">COMFORT</button>
                 <button id="mode-eco" class="mode-button">ECO</button>
+                <button id="mode-comfort" class="mode-button active">COMFORT</button>
+                <button id="mode-sport" class="mode-button">SPORT</button>
                 <button id="mode-race" class="mode-button">RACE</button>
             </div>
             <div id="gear-indicator">N</div>
             <button id="launch-control-button" class="mode-button">LAUNCH CONTROL</button>
             <div id="indicator-container">
-                <img id="abs-indicator" src="abs.png" alt="ABS" class="indicator-icon">
-                <img id="trs-indicator" src="trs.png" alt="TRS" class="indicator-icon">
-            </div>
+                </div>
         </footer>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js?v=1678886400"></script>
 </body>
 </html>

@@ -51,15 +51,24 @@ document.addEventListener('DOMContentLoaded', () => {
     autonomyValueElement.textContent = currentAutonomy.toFixed(1); // Initial display
 
     // Driving Modes
-    const modeButtons = document.querySelectorAll('.mode-button');
+    // const modeButtons = document.querySelectorAll('.mode-button'); // Removed unused variable
     let currentMode = localStorage.getItem('currentMode') || 'COMFORT'; // Default mode, loaded from local storage
     const launchControlButton = document.getElementById('launch-control-button');
 
-    // Get only the actual mode buttons, excluding the Launch Control button and Toggle Indicators button
-    const actualModeButtons = document.querySelectorAll('.mode-button:not(#launch-control-button):not(#toggle-indicators-button)');
+    // Get only the actual mode buttons
+    const actualModeButtons = document.querySelectorAll('#mode-sport, #mode-comfort, #mode-eco, #mode-race');
 
     // ABS Indicator elements - Moved to top
     const absIndicator = document.getElementById('abs-indicator');
+
+    function showAbsIndicator() {
+        absIndicator.classList.add('active');
+    }
+
+    function hideAbsIndicator() {
+        absIndicator.classList.remove('active');
+    }
+
     let lastSpeed = 0;
 
     // TRS Indicator elements - Moved to top
@@ -90,6 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Remove all existing mode classes from headunitContainer
+        headunitContainer.classList.remove('mode-default', 'mode-eco', 'mode-comfort', 'mode-sport', 'mode-race');
+        // Add the new mode class
+        headunitContainer.classList.add(`mode-${mode.toLowerCase()}`);
+
         updateLaunchControlButtonVisibility();
 
         console.log(`Mode set to: ${currentMode}`);
@@ -98,12 +112,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     actualModeButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const mode = button.id.replace('mode-', '').toUpperCase();
-            setMode(mode);
+            // Explicitly check if the clicked button is one of the valid mode buttons
+            if (button.id.startsWith('mode-')) {
+                const mode = button.id.replace('mode-', '').toUpperCase();
+                setMode(mode);
+            }
         });
     });
 
     setMode(currentMode); // Set initial active mode (will now load from local storage or default)
+    headunitContainer.classList.add(`mode-${currentMode.toLowerCase()}`); // Ensure initial mode class is applied to headunitContainer
     updateLaunchControlButtonVisibility(); // Ensure initial visibility is correct
 
     // New function to control launch control button visibility
@@ -131,33 +149,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Removed Toggle Indicators Button functionality
-    /*
-    const toggleIndicatorsButton = document.getElementById('toggle-indicators-button');
-    const indicatorContainer = document.getElementById('indicator-container');
-    let indicatorsVisible = true; // Start visible
-
-    toggleIndicatorsButton.addEventListener('click', () => {
-        if (indicatorsVisible) {
-            indicatorContainer.style.display = 'none';
-            indicatorsVisible = false;
-        } else {
-            indicatorContainer.style.display = 'flex';
-            indicatorsVisible = true;
-        }
-    });
-    */
 
     launchControlButton.addEventListener('click', () => {
-        // Only allow activation if in RACE mode and stationary
-        if (currentMode === 'RACE' && currentSpeed === 0) {
+        // Only allow activation if in RACE mode and speed is 2 km/h or less
+        if (currentMode === 'RACE' && currentSpeed <= 2) {
             speedometerElement.classList.add('red');
             isSpeedometerRed = true;
             launchControlButton.classList.add('active'); // Indicate launch control is active (pulsing yellow)
             launchControlButton.classList.add('lc-active-pulse'); // Make it red and pulse
         } else if (currentMode !== 'RACE') {
             alert('Launch Control only works in RACE mode.');
-        } else if (currentSpeed > 0) {
-            alert('Launch Control is only for stationary starts.');
+        } else if (currentSpeed > 2) {
+            alert('Launch Control is only for speeds up to 2 km/h.');
         }
     });
 
@@ -219,8 +222,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const timeElapsed = (timestamp - lastPosition.timestamp) / 1000; // in seconds
 
                 if (timeElapsed > 0) {
+                    const oldSpeed = currentSpeed; // Store currentSpeed before it's updated
                     currentSpeed = (distance / timeElapsed) * 3.6; // m/s to km/h
                     speedValueElement.textContent = Math.round(currentSpeed);
+
+                    // Deceleration check for ABS indicator
+                    const deceleration = oldSpeed - currentSpeed;
+                    if (deceleration > 10 && currentSpeed < oldSpeed) {
+                        showAbsIndicator();
+                    } else {
+                        hideAbsIndicator();
+                    }
 
                     // Autonomy decrease based on actual distance
                     const distanceKm = distance / 1000;
@@ -293,13 +305,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Modify originalUpdateSpeedAndWattsForBraking to also handle TRS activation
-    const originalUpdateSpeedAndWattsForBraking = () => {
-        if (lastSpeed > 30 && currentSpeed < (lastSpeed - 20)) {
-            showAbsIndicator();
-        }
-        lastSpeed = currentSpeed; // Update lastSpeed based on GPS currentSpeed
-        checkTrsActivation(); // Check TRS activation on every speed update
-    };
+    // const originalUpdateSpeedAndWattsForBraking = () => {
+    //     if (lastSpeed > 30 && currentSpeed < (lastSpeed - 20)) {
+    //         showAbsIndicator();
+    //     }
+    //     lastSpeed = currentSpeed; // Update lastSpeed based on GPS currentSpeed
+    //     checkTrsActivation(); // Check TRS activation on every speed update
+    // };
 
     // Replace existing setInterval for speed and watts with a mechanism that calls updateWattmeter and originalUpdateSpeedAndWattsForBraking
     // No longer need setInterval(updateSpeedAndWatts, 1000) as GPS watchPosition handles updates

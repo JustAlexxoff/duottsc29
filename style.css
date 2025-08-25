@@ -1,13 +1,26 @@
 /* Basic styles for the head unit and splash screen */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
+:root {
+    --eco-color: #00FF00; /* Green */
+    --comfort-color: #00BFFF; /* DeepSkyBlue */
+    --sport-color: #FF4500; /* OrangeRed */
+    --race-color: #FF0000; /* Red */
+}
+
+html {
+    background-color: #000;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on iOS */
+}
 
 body {
     margin: 0;
-    font-family: 'Montserrat', sans-serif; /* Modern font */
+    font-family: 'Montserrat', sans-serif;
     overflow: hidden;
-    background-color: #000; /* Set background to black */
-    color: #E0E0E0; /* Light gray for general text */
+    background-color: #000;
+    color: #E0E0E0;
     font-size: 14px;
+    touch-action: manipulation; /* Improve responsiveness on touch devices */
 }
 
 #splash-screen {
@@ -21,7 +34,7 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    transition: opacity 1s ease-out;
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth cubic bezier */
 }
 
 #splash-screen.fade-out {
@@ -30,55 +43,70 @@ body {
 }
 
 #splash-screen img {
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 70%; /* Slightly smaller logo */
+    max-height: 70%;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.5)); /* Subtle glow */
 }
 
 #headunit-container {
     display: none;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    padding: 15px; /* Slightly increased padding */
     box-sizing: border-box;
     width: 100vw;
     height: 100vh;
-    background-color: #000; /* Set background to black */
     position: relative;
     justify-content: space-between;
-    border-radius: 15px; /* Slightly rounded edges for the whole unit */
-    box-shadow: none; /* Removed glow */
+    border-radius: 20px; /* More pronounced rounded edges */
+    transition: background 1.2s ease-in-out, box-shadow 1.2s ease-in-out, border 1.2s ease-in-out; /* Add transition for smooth color change */
+}
+
+/* Default mode style */
+#headunit-container.mode-default {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); /* Deep radial gradient */
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 255, 255, 0.2);
 }
 
 #top-bar {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
-    padding: 5px 15px; /* Adjusted padding */
+    justify-content: flex-end; /* Align elements to the right */
+    align-items: center; /* Vertically align items */
+    padding: 10px 20px; /* Increased padding */
+    background: rgba(0, 0, 0, 0.3); /* Subtle semi-transparent background */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.1); /* Inner cyan glow */
 }
 
 #clock {
-    font-size: 1.8em; /* Slightly larger */
-    font-weight: bold;
-    color: #00FFFF; /* Cyan for clock */
+    font-size: 2em; /* Larger clock font */
+    font-weight: 500; /* Medium font weight */
+    color: #00FFFF; /* Vibrant Cyan */
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* Stronger cyan glow */
+    margin-right: 20px; /* Space from charge button */
 }
 
 #charge-button {
-    background-color: #28a745; /* Green color for charge */
+    background: linear-gradient(145deg, #00C853, #009624); /* Green gradient */
     color: #fff;
     border: none;
-    padding: 5px 8px; /* Smaller padding */
-    border-radius: 4px;
-    font-size: 0.7em; /* Smaller font size */
+    padding: 8px 15px; /* More substantial padding */
+    border-radius: 8px; /* More rounded */
+    font-size: 0.8em;
+    font-weight: 500;
     cursor: pointer;
-    margin-left: 10px; /* Space from clock */
     text-transform: uppercase;
-    box-shadow: 0 0 8px rgba(40, 167, 69, 0.4); /* Green glow */
-    transition: background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 15px rgba(0, 200, 83, 0.5), inset 0 0 5px rgba(255, 255, 255, 0.3); /* Green glow, inner highlight */
+    transition: all 0.2s ease-in-out;
+    letter-spacing: 0.5px;
 }
 
 #charge-button:hover {
-    background-color: #218838;
-    box-shadow: 0 0 12px rgba(40, 167, 69, 0.6);
+    background: linear-gradient(145deg, #00E676, #00C853); /* Lighter green on hover */
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.7), inset 0 0 8px rgba(255, 255, 255, 0.5); /* Stronger hover glow */
+    transform: translateY(-2px); /* Slight lift effect */
 }
 
 #main-display {
@@ -88,36 +116,40 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 20px 0; /* Added padding */
 }
 
 #speedometer {
-    font-size: 5.5em; /* Larger speedometer */
-    font-weight: 700; /* Bolder font weight */
-    color: #FFFFFF; /* White for speed */
-    margin-bottom: 15px; /* Adjusted margin */
+    font-size: 7em; /* Even larger speedometer */
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 20px;
     display: flex;
     align-items: baseline;
-    letter-spacing: -2px; /* Tighter letter spacing */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow */
+    letter-spacing: -3px; /* Tighter letter spacing for impactful numbers */
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5); /* Intense white glow with cyan undertone */
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Smooth color and shadow transition */
+    position: relative; /* Added for positioning indicators */
 }
 
 #speedometer .unit {
-    font-size: 0.25em; /* Smaller unit text */
-    opacity: 0.8;
-    margin-left: 5px; /* Adjusted margin */
+    font-size: 0.22em; /* Slightly smaller unit text */
+    opacity: 0.7;
+    margin-left: 8px; /* Increased margin */
     color: #E0E0E0;
 }
 
 #parallelogram-wattmeter-container {
-    display: block; /* Change to block for a single bar */
-    height: 30px; /* Reduced height for a sleeker bar */
-    width: 90%;
-    margin-top: 25px;
-    border-radius: 15px; /* Fully rounded caps for a smooth look */
-    background: linear-gradient(to right, #222222 0%, #333333 100%); /* Dark metallic background for the empty bar */
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7), 0 5px 15px rgba(0, 0, 0, 0.5); /* Deep inset shadow and subtle outer shadow */
+    display: block;
+    height: 35px; /* Slightly taller bar */
+    width: 85%; /* Slightly narrower for more framed look */
+    margin-top: 30px; /* Increased margin */
+    border-radius: 18px; /* More rounded */
+    background: linear-gradient(to right, #1a1a1a 0%, #333333 100%); /* Darker metallic background for empty bar */
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8), 0 8px 25px rgba(0, 0, 0, 0.6); /* Deeper inset shadow, more prominent outer shadow */
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(255, 215, 0, 0.1); /* Subtle gold border */
 }
 
 #wattmeter-fill-bar {
@@ -125,32 +157,34 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    width: 0%; /* Starts empty */
-    border-radius: 15px; /* Rounded caps */
-    background: linear-gradient(to right, #FFD700 0%, #FFA500 100%); /* Gold to Orange gradient for fill */
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7), inset 0 0 5px rgba(255, 255, 255, 0.3); /* Glowing fill with inner highlight */
-    transition: width 0.5s ease-out; /* Smooth fill animation */
+    width: 0%;
+    border-radius: 18px;
+    background: linear-gradient(to right, #FFD700 0%, #FFA500 100%); /* Consistent gold to orange gradient */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.9), inset 0 0 8px rgba(255, 255, 255, 0.4); /* Brighter glowing fill with stronger inner highlight */
+    transition: width 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* More dynamic fill animation */
+    filter: brightness(1.1); /* Slightly boost brightness */
 }
 
 #watt-value {
     position: relative;
-    color: #FFD700; /* Gold for watt value */
+    color: #FFD700;
     font-weight: 700;
-    font-size: 1.8em;
-    margin-top: 15px;
-    text-shadow: 0 0 12px rgba(255, 215, 0, 0.8); /* Stronger gold glow */
+    font-size: 2em; /* Even larger watt value */
+    margin-top: 20px;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 25px rgba(255, 165, 0, 0.8); /* Intense gold/orange glow */
 }
 
 #autonomy {
-    font-size: 1.4em; /* Slightly larger autonomy text */
-    margin-top: 15px;
+    font-size: 1.6em; /* Larger autonomy text */
+    margin-top: 25px; /* Increased margin */
     color: #E0E0E0;
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.3); /* Subtle cyan glow */
 }
 
 #autonomy-value {
     font-weight: bold;
-    color: #00FFFF; /* Cyan for autonomy value */
-    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5); /* Subtle glow */
+    color: #00FFFF;
+    text-shadow: 0 0 12px rgba(0, 255, 255, 0.8); /* Stronger cyan glow */
 }
 
 #bottom-bar {
@@ -158,66 +192,74 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 15px; /* Adjusted padding */
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
-    border-top: 1px solid rgba(0, 255, 255, 0.2); /* Cyan border top */
+    padding: 15px 20px; /* Increased padding */
+    background: linear-gradient(to right, #0A0A0A, #1A1A1A); /* Dark metallic gradient background */
+    border-top: 1px solid rgba(0, 255, 255, 0.3); /* Cyan border top */
+    border-radius: 0 0 15px 15px; /* Rounded bottom corners */
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5), inset 0 5px 10px rgba(255, 255, 255, 0.1); /* Subtle top shadow, inner highlight */
 }
 
 #mode-selector {
     display: flex;
-    gap: 8px; /* Adjusted gap */
+    gap: 10px; /* Increased gap */
 }
 
 .mode-button {
-    background-color: #333; /* Darker default button */
+    background: linear-gradient(145deg, #333333, #1A1A1A); /* Dark gradient button */
     color: #E0E0E0;
-    border: none;
-    padding: 7px 10px; /* Adjusted padding */
-    border-radius: 4px; /* Sharper edges */
-    font-size: 0.85em; /* Slightly smaller font */
+    border: 1px solid rgba(0, 255, 255, 0.1); /* Subtle cyan border */
+    padding: 10px 18px; /* More substantial padding */
+    border-radius: 6px; /* Slightly more rounded */
+    font-size: 0.9em;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-    text-transform: uppercase; /* Uppercase text */
-    box-shadow: 0 0 8px rgba(0, 255, 255, 0.1); /* Subtle cyan shadow */
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother and more consistent transition */
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1), inset 0 0 5px rgba(255, 255, 255, 0.1); /* Subtle cyan outer, inner shadow */
+    letter-spacing: 0.5px;
 }
 
 .mode-button:hover {
-    background-color: #555;
-    box-shadow: 0 0 12px rgba(0, 255, 255, 0.4); /* Stronger hover glow */
+    background: linear-gradient(145deg, #444444, #2A2A2A); /* Lighter gradient on hover */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), inset 0 0 8px rgba(255, 255, 255, 0.2); /* Stronger hover glow */
+    transform: translateY(-1px); /* Subtle lift */
 }
 
 .mode-button.active {
-    background-color: #00FFFF; /* Vibrant Cyan for active mode */
-    color: #000; /* Black text on active */
-    font-weight: bold;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8); /* Prominent glow */
+    background: linear-gradient(145deg, #00FFFF, #00C8FF); /* Vibrant cyan gradient */
+    color: #111; /* Darker text for contrast */
+    font-weight: 700; /* Bolder active text */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.4); /* Intense cyan glow */
+    transform: translateY(-2px); /* More pronounced lift */
 }
 
 #gear-indicator {
-    font-size: 2.2em; /* Slightly larger gear indicator */
-    font-weight: bold;
-    color: #FFFFFF; /* White for gear */
-    margin-left: 15px; /* Adjusted margin */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow */
+    font-size: 2.5em; /* Larger gear indicator */
+    font-weight: 700; /* Bolder font weight */
+    color: #FFFFFF;
+    margin-left: 25px; /* Increased margin */
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7); /* Stronger white glow */
+    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Smooth color and shadow transition */
 }
 
 #gear-indicator.drive {
-    color: #00FF00; /* Vibrant Green for Drive */
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Green glow */
+    color: #00FF00; /* Vibrant Green */
+    text-shadow: 0 0 15px rgba(0, 255, 0, 0.8); /* Stronger green glow */
 }
 
 #launch-control-button {
-    background-color: #FFD700; /* Gold color for launch control */
-    color: #000;
-    font-weight: bold;
-    padding: 7px 10px;
-    border-radius: 4px;
-    font-size: 0.85em;
+    background: linear-gradient(145deg, #FFD700, #FFA500); /* Gold to Orange gradient */
+    color: #111; /* Darker text */
+    font-weight: 700; /* Bolder font weight */
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.9em;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 15px; /* Increased margin */
     text-transform: uppercase;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Gold glow */
-    display: block; /* Ensure it's always displayable by default */
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), inset 0 0 5px rgba(255, 255, 255, 0.2); /* Gold glow, inner highlight */
+    transition: all 0.2s ease-in-out;
+    letter-spacing: 0.5px;
 }
 
 .lc-button-hidden {
@@ -239,39 +281,82 @@ body {
     box-shadow: 0 0 20px rgba(255, 215, 0, 1); /* Stronger pulse glow */
 }
 
-.lc-active-pulse {
-    background-color: #FF0000; /* Red when active */
-    animation: pulse 0.5s infinite alternate; /* Pulsating effect */
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); /* Red glow */
+#launch-control-button.lc-active-pulse {
+    background: linear-gradient(145deg, #FF0000, #CC0000); /* Red gradient for active */
+    animation: pulse 0.4s infinite alternate; /* Slightly faster pulse */
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.5); /* Intense red glow */
     color: #fff; /* White text for contrast */
+    transform: scale(1.03); /* Slight scale for emphasis */
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Ensure smooth transition on deactivation */
 }
 
-#indicator-container {
-    position: absolute;
-    right: 15px; /* Adjusted position */
-    bottom: 15px; /* Adjusted position */
-    display: flex;
-    gap: 8px; /* Adjusted gap */
-}
+/* Remove indicator-container styling as indicators are moved */
 
 .indicator-icon {
-    width: 35px; /* Slightly smaller indicators */
-    height: 35px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    width: 40px; /* Slightly larger indicators */
+    height: 40px;
+    /* Remove default opacity and transition here as it will be controlled by specific classes */
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.5)); /* Subtle shadow */
 }
 
+/* Styles for new indicator positions */
+.indicator-icon.abs-left {
+    position: absolute;
+    left: -110px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0; /* Reverted to hidden by default */
+    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.indicator-icon.trs-right {
+    position: absolute;
+    right: -80px; /* Adjust as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0; /* Reverted to hidden by default */
+    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Existing .indicator-icon.active class will still apply for activation styling */
 .indicator-icon.active {
     opacity: 1;
-    animation: pulse 0.4s infinite alternate; /* Faster pulse */
+    animation: pulse 0.3s infinite alternate; /* Faster, more impactful pulse */
+    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8)); /* Stronger cyan glow */
+    transform: scale(1.05); /* Slight scale for emphasis */
 }
 
 #speedometer.red {
-    color: #FF0000; /* Bright red for race start */
-    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9); /* Intense red glow */
+    color: #FF0000;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 100, 100, 0.8); /* Intense red glow with soft outer red */
 }
 
 @keyframes pulse {
     from { opacity: 1; transform: scale(1); }
-    to { opacity: 0.6; transform: scale(1.05); }
+    to { opacity: 0.7; transform: scale(1.03); }
+}
+
+/* Mode specific styles */
+#headunit-container.mode-eco {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #1a1a1a 90%, var(--eco-color) 100%);
+    box-shadow: 0 0 40px var(--eco-color), inset 0 0 20px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+#headunit-container.mode-comfort {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #1a1a1a 90%, var(--comfort-color) 100%);
+    box-shadow: 0 0 40px var(--comfort-color), inset 0 0 20px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+#headunit-container.mode-sport {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #1a1a1a 90%, var(--sport-color) 100%);
+    box-shadow: 0 0 40px var(--sport-color), inset 0 0 20px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 69, 0, 0.2);
+}
+
+#headunit-container.mode-race {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #1a1a1a 90%, var(--race-color) 100%);
+    box-shadow: 0 0 40px var(--race-color), inset 0 0 20px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 0, 0, 0.2);
 }
