@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorcycle Headunit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="splash-screen">
+        <img src="assets/logo.png" alt="Logo">
+    </div>
+    <div id="headunit-container">
+        <header id="top-bar">
+            <div id="clock">12:00 PM</div>
+            <button id="charge-button" class="mode-button">CHARGE</button>
+        </header>
+        <main id="main-display">
+            <div id="speedometer">
+                <span id="speed-value">0</span><span class="unit"> km/h</span>
+            </div>
+            <div id="parallelogram-wattmeter-container">
+                <div id="wattmeter-fill-bar"></div>
+            </div>
+            <span id="watt-value">0 W</span>
+            <div id="autonomy">
+                Autonomie: <span id="autonomy-value">30</span> km
+            </div>
+        </main>
+        <footer id="bottom-bar">
+            <div id="mode-selector">
+                <button id="mode-sport" class="mode-button">SPORT</button>
+                <button id="mode-comfort" class="mode-button active">COMFORT</button>
+                <button id="mode-eco" class="mode-button">ECO</button>
+                <button id="mode-race" class="mode-button">RACE</button>
+            </div>
+            <div id="gear-indicator">N</div>
+            <button id="launch-control-button" class="mode-button">LAUNCH CONTROL</button>
+            <div id="indicator-container">
+                <img id="abs-indicator" src="assets/abs.png" alt="ABS" class="indicator-icon">
+                <img id="trs-indicator" src="assets/trs.png" alt="TRS" class="indicator-icon">
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

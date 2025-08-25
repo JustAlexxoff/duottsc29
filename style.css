@@ -1,0 +1,277 @@
+/* Basic styles for the head unit and splash screen */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif; /* Modern font */
+    overflow: hidden;
+    background-color: #000; /* Set background to black */
+    color: #E0E0E0; /* Light gray for general text */
+    font-size: 14px;
+}
+
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 1s ease-out;
+}
+
+#splash-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#splash-screen img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+#headunit-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000; /* Set background to black */
+    position: relative;
+    justify-content: space-between;
+    border-radius: 15px; /* Slightly rounded edges for the whole unit */
+    box-shadow: none; /* Removed glow */
+}
+
+#top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 15px; /* Adjusted padding */
+}
+
+#clock {
+    font-size: 1.8em; /* Slightly larger */
+    font-weight: bold;
+    color: #00FFFF; /* Cyan for clock */
+}
+
+#charge-button {
+    background-color: #28a745; /* Green color for charge */
+    color: #fff;
+    border: none;
+    padding: 5px 8px; /* Smaller padding */
+    border-radius: 4px;
+    font-size: 0.7em; /* Smaller font size */
+    cursor: pointer;
+    margin-left: 10px; /* Space from clock */
+    text-transform: uppercase;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.4); /* Green glow */
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+#charge-button:hover {
+    background-color: #218838;
+    box-shadow: 0 0 12px rgba(40, 167, 69, 0.6);
+}
+
+#main-display {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#speedometer {
+    font-size: 5.5em; /* Larger speedometer */
+    font-weight: 700; /* Bolder font weight */
+    color: #FFFFFF; /* White for speed */
+    margin-bottom: 15px; /* Adjusted margin */
+    display: flex;
+    align-items: baseline;
+    letter-spacing: -2px; /* Tighter letter spacing */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow */
+}
+
+#speedometer .unit {
+    font-size: 0.25em; /* Smaller unit text */
+    opacity: 0.8;
+    margin-left: 5px; /* Adjusted margin */
+    color: #E0E0E0;
+}
+
+#parallelogram-wattmeter-container {
+    display: block; /* Change to block for a single bar */
+    height: 30px; /* Reduced height for a sleeker bar */
+    width: 90%;
+    margin-top: 25px;
+    border-radius: 15px; /* Fully rounded caps for a smooth look */
+    background: linear-gradient(to right, #222222 0%, #333333 100%); /* Dark metallic background for the empty bar */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7), 0 5px 15px rgba(0, 0, 0, 0.5); /* Deep inset shadow and subtle outer shadow */
+    position: relative;
+    overflow: hidden;
+}
+
+#wattmeter-fill-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%; /* Starts empty */
+    border-radius: 15px; /* Rounded caps */
+    background: linear-gradient(to right, #FFD700 0%, #FFA500 100%); /* Gold to Orange gradient for fill */
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7), inset 0 0 5px rgba(255, 255, 255, 0.3); /* Glowing fill with inner highlight */
+    transition: width 0.5s ease-out; /* Smooth fill animation */
+}
+
+#watt-value {
+    position: relative;
+    color: #FFD700; /* Gold for watt value */
+    font-weight: 700;
+    font-size: 1.8em;
+    margin-top: 15px;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.8); /* Stronger gold glow */
+}
+
+#autonomy {
+    font-size: 1.4em; /* Slightly larger autonomy text */
+    margin-top: 15px;
+    color: #E0E0E0;
+}
+
+#autonomy-value {
+    font-weight: bold;
+    color: #00FFFF; /* Cyan for autonomy value */
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5); /* Subtle glow */
+}
+
+#bottom-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 15px; /* Adjusted padding */
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    border-top: 1px solid rgba(0, 255, 255, 0.2); /* Cyan border top */
+}
+
+#mode-selector {
+    display: flex;
+    gap: 8px; /* Adjusted gap */
+}
+
+.mode-button {
+    background-color: #333; /* Darker default button */
+    color: #E0E0E0;
+    border: none;
+    padding: 7px 10px; /* Adjusted padding */
+    border-radius: 4px; /* Sharper edges */
+    font-size: 0.85em; /* Slightly smaller font */
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    text-transform: uppercase; /* Uppercase text */
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.1); /* Subtle cyan shadow */
+}
+
+.mode-button:hover {
+    background-color: #555;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.4); /* Stronger hover glow */
+}
+
+.mode-button.active {
+    background-color: #00FFFF; /* Vibrant Cyan for active mode */
+    color: #000; /* Black text on active */
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8); /* Prominent glow */
+}
+
+#gear-indicator {
+    font-size: 2.2em; /* Slightly larger gear indicator */
+    font-weight: bold;
+    color: #FFFFFF; /* White for gear */
+    margin-left: 15px; /* Adjusted margin */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow */
+}
+
+#gear-indicator.drive {
+    color: #00FF00; /* Vibrant Green for Drive */
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Green glow */
+}
+
+#launch-control-button {
+    background-color: #FFD700; /* Gold color for launch control */
+    color: #000;
+    font-weight: bold;
+    padding: 7px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    cursor: pointer;
+    margin-left: 10px;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Gold glow */
+    display: block; /* Ensure it's always displayable by default */
+}
+
+.lc-button-hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none; /* Disable interaction when hidden */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.lc-button-visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all; /* Enable interaction when visible */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#launch-control-button.active {
+    animation: pulse 0.5s infinite alternate;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 1); /* Stronger pulse glow */
+}
+
+.lc-active-pulse {
+    background-color: #FF0000; /* Red when active */
+    animation: pulse 0.5s infinite alternate; /* Pulsating effect */
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.9); /* Red glow */
+    color: #fff; /* White text for contrast */
+}
+
+#indicator-container {
+    position: absolute;
+    right: 15px; /* Adjusted position */
+    bottom: 15px; /* Adjusted position */
+    display: flex;
+    gap: 8px; /* Adjusted gap */
+}
+
+.indicator-icon {
+    width: 35px; /* Slightly smaller indicators */
+    height: 35px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.indicator-icon.active {
+    opacity: 1;
+    animation: pulse 0.4s infinite alternate; /* Faster pulse */
+}
+
+#speedometer.red {
+    color: #FF0000; /* Bright red for race start */
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9); /* Intense red glow */
+}
+
+@keyframes pulse {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0.6; transform: scale(1.05); }
+}
