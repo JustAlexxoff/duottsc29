@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // All other JavaScript logic will go here
 
     // Clock update
-    const clockElement = document.getElementById('clock');
+    const clockElement = document.getElementById('clock-bottom');
 
     function updateClock() {
         const now = new Date();
@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ABS Indicator elements - Moved to top
     const absIndicator = document.getElementById('abs-indicator');
+    const warningIndicator = document.getElementById('warning-indicator');
 
     function showAbsIndicator() {
         absIndicator.classList.add('active');
@@ -67,6 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function hideAbsIndicator() {
         absIndicator.classList.remove('active');
+    }
+
+    function showWarningIndicator() {
+        warningIndicator.classList.add('active');
+    }
+
+    function hideWarningIndicator() {
+        warningIndicator.classList.remove('active');
     }
 
     let lastSpeed = 0;
@@ -123,6 +132,26 @@ document.addEventListener('DOMContentLoaded', () => {
     setMode(currentMode); // Set initial active mode (will now load from local storage or default)
     headunitContainer.classList.add(`mode-${currentMode.toLowerCase()}`); // Ensure initial mode class is applied to headunitContainer
     updateLaunchControlButtonVisibility(); // Ensure initial visibility is correct
+
+    // Function to flash all indicators on startup
+    function flashAllIndicators() {
+        const indicators = [absIndicator, trsIndicator, warningIndicator];
+        indicators.forEach(indicator => {
+            indicator.classList.add('active');
+        });
+        setTimeout(() => {
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+        }, 1000); // Flash for 1 second
+    }
+
+    // Call flashAllIndicators after splash screen fades out
+    splashScreen.addEventListener('transitionend', () => {
+        if (splashScreen.classList.contains('fade-out')) {
+            flashAllIndicators();
+        }
+    }, { once: true });
 
     // New function to control launch control button visibility
     function updateLaunchControlButtonVisibility() {
@@ -240,6 +269,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (currentAutonomy < 0) currentAutonomy = 0;
                     autonomyValueElement.textContent = currentAutonomy.toFixed(1);
                     localStorage.setItem('autonomy', currentAutonomy.toFixed(1));
+
+                    // Warning indicator for low autonomy
+                    if (currentAutonomy < 10) {
+                        showWarningIndicator();
+                        autonomyValueElement.classList.add('autonomy-low-red');
+                    } else {
+                        hideWarningIndicator();
+                        autonomyValueElement.classList.remove('autonomy-low-red');
+                    }
 
                     // Update gear indicator
                     updateGearIndicator();
